@@ -9,32 +9,35 @@ import java.util.List;
 @RestController
 @RequestMapping("/tarefas")
 public class TarefaController {
-    private TarefaService tarefaService;
+
+    private final TarefaService tarefaService;
 
     public TarefaController(TarefaService tarefaService) {
         this.tarefaService = tarefaService;
     }
 
-    @PostMapping
-    List <Tarefa> create (@RequestBody Tarefa tarefa) {
+    @PostMapping("/criar")
+    public List<Tarefa> create(@RequestBody Tarefa tarefa) {
         return tarefaService.create(tarefa);
     }
 
     @GetMapping
-    List <Tarefa> list () {
+    public List<Tarefa> list() {
         return tarefaService.list();
-
     }
 
-    @PostMapping
-    List <Tarefa> update (@RequestBody Tarefa tarefa) {
+    @GetMapping("/{id}")
+    public Tarefa getById(@PathVariable Long id) {
+        return tarefaService.getById(id);
+    }
+
+    @PutMapping("/atualizar")
+    public List<Tarefa> update(@RequestBody Tarefa tarefa) {
         return tarefaService.update(tarefa);
-
     }
 
-    @DeleteMapping("{id}")
-    List<Tarefa> delete (@PathVariable("id") Long id) {
+    @DeleteMapping("/{id}")
+    public List<Tarefa> delete(@PathVariable("id") Long id) {
         return tarefaService.delete(id);
     }
-
 }
